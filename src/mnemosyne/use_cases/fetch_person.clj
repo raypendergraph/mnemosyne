@@ -3,7 +3,7 @@
               [clojure.spec.alpha :as spec]))
 
 (defn fetch-person [context person-id]
-    (fetch-person (get context :fetch-person) id))
+    (fetch-person-with-id (get context :fetch-person) id))
 
-(defprotocol FetchPerson
-    (fetch-person [this id]))
+(defprotocol PersonFetcher
+    (fetch-person-with-id [this id]))

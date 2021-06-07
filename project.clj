@@ -5,8 +5,8 @@
   :dependencies [[compojure "1.6.1"]
                  [gorillalabs/neo4j-clj "4.1.2"]
                  [org.clojure/clojure "1.10.0"]
-                 [ring/ring-jetty-adapter "1.7.1"] 
                  [metosin/compojure-api "2.0.0-alpha31"]]
+  :plugins [[lein-ring "0.12.5"]]
   :ring {:handler mnemosyne.handler/start}
-  :repl-options {:init-ns mnemosyne.handler}
-  :profiles {:dev {:dependencies [[ring/ring-mock "0.3.2"]]}})
+  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                        [ring/ring-mock "0.3.2"]]}})
