@@ -1,5 +1,6 @@
 (ns mnemosyne.entities.person
-  (:require [clojure.spec.alpha :as spec]))
+  (:require [clojure.spec.alpha :as spec])
+  (:import (java.util Date)))
 
 (spec/def ::person
   (spec/keys :req-un [::name ::born ::died]
@@ -7,7 +8,7 @@
 
 (spec/def ::name string?)
 (spec/def ::born (fn [v]
-                   (instance? java.util.Date)))
+                   (instance? Date v)))
 (spec/def ::died (fn [v]
-                   (instance? java.util.Date)))
+                   (instance? Date v)))
 (spec/def ::links (spec/* string?))

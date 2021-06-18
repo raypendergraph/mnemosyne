@@ -1,0 +1,7 @@
+neo4j:
+  uri: bolt://localhost:7687
+  user: neo4j
+  secret: aoeaoeuaoeuaoeu
+jetty:
+  port: 8080
+  
