@@ -1,7 +1,7 @@
 (ns mnemosyne.adapters.ring
   (:require
-    [mnemosyne.common :as common]
-    [mnemosyne.use-cases.people :as people]
+    [mnemosyne.use-cases.person :as person]
+    [mnemosyne.model.common :as common]
     [muuntaja.core :as muuntaja]
     [reitit.ring :as ring]
     [reitit.coercion.spec :as rspec]
@@ -23,13 +23,14 @@
   (ring/ring-handler
     (ring/router
       ["/api"
-       ["/people/:id" {:get {:parameters {:path-params {:id common/uuid-string?}}
-                             :responses  {201 {:body {:id common/uuid-string?}}}
-                             :handler    (fn [{:keys [path-params]}]
-                                           (let [id (:id path-params)
-                                                 person (people/read-person system-context id)]
-                                             {:status 201
-                                              :body   {:id "87DCF4F9-9C2C-4BFF-8097-616386812548"}}))}}]]
+       ["/people/:uuid" {:get {:parameters {:path-params {:id ::common/uuid-string}}
+                               :responses  {201 {:body {:id ::common/uuid-string}}}
+                               :handler    (fn [{:keys [path-params]}]
+                                             (let [uuid (:uuid path-params)
+                                                   datasource (:datasource system-context)
+                                                   person (person/read-person datasource uuid)]
+                                               {:status 201
+                                                :body   {:id "87DCF4F9-9C2C-4BFF-8097-616386812548"}}))}}]]
       ;; router data affecting all routes
       {:data {:coercion   rspec/coercion
               :muuntaja   muuntaja/instance

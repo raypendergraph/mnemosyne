@@ -1,15 +1,15 @@
 (ns mnemosyne.system.neo4j
   (:require [clojure.spec.alpha :as spec]
             [com.stuartsierra.component :as component]
-            [neo4j-clj.core :as db]
-            [mnemosyne.use-cases.people :as people])
+            [neo4j-clj.core :as db])
+
   (:import (java.net URI)))
 
-(spec/def ::neo4j-config
-  (spec/keys :req-un [::uri ::user ::secret]))
 (spec/def ::string uri?)
 (spec/def ::user string?)
 (spec/def ::secret string?)
+(spec/def ::neo4j-config
+  (spec/keys :req-un [::uri ::user ::secret]))
 
 (defrecord Neo4j [conn config]
   component/Lifecycle
@@ -24,14 +24,8 @@
     (.stop conn)
     (assoc this :conn nil)))
 
-(extend-type Neo4j
-  people/PersonReadWriter
-  (create [neo4j person]
-    (println "Saved Person!!!" person))
-  (read [neo4j person]
-    (println "Read Person!!!" person)))
 
-(defn neo4j [config]
+(defn create-neo4j [config]
   {:pre [(or (spec/valid? ::neo4j-config config)
              (spec/explain ::neo4j-config config))]}
   (map->Neo4j {:config config}))

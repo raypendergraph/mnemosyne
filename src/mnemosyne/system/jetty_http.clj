@@ -6,7 +6,7 @@
   (spec/keys :opt-un [::port]))
 (spec/def ::port number?)
 
-(defrecord JettyHttp [handler context server config]
+(defrecord Jetty [handler context server config]
   component/Lifecycle
   (start [{:keys [context handler] :as this}]
     (assoc this :server (jetty/run-jetty (handler context) {})))
@@ -14,6 +14,6 @@
     (.stop server)
     (assoc this :server nil)))
 
-(defn jetty-http [handler config]
+(defn create-jetty [handler config]
   {:pre [(spec/valid? ::jetty-config config)]}
-  (map->JettyHttp {:handler handler :config config}))
+  (map->Jetty {:handler handler :config config}))
