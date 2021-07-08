@@ -8,7 +8,7 @@
   (yaml/parse-string (slurp filename)))
 
 (defn -main [& args]
-  (let [[config-file] ["src/mnemosyne/dev.config.yml"]
+  (let [[config-file] ["config.yml"]
         config (read-config-yaml config-file)
         wait (async/chan)
         _ (println config)]

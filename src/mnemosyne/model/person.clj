@@ -9,4 +9,4 @@
   (spec/keys :req-un [::name ::born]
              :opt-un [::died]))
 
-(spec/def ::person-entity (spec/and ::person ::common/entity))
+(spec/def ::person-entity (spec/merge ::person ::common/entity))

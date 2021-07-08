@@ -13,7 +13,7 @@
 
 (defn system [config]
   (component/system-map
-    :database (neo4j/create-neo4j (:neo4j config))
-    :context (component/using {} {:person-impl :database})
+    :neo4j (neo4j/create-neo4j (:neo4j config))
+    :context (component/using {} {:datasource :neo4j})
     :http (component/using (jetty/create-jetty ring/handler (:jetty config))
                            {:context :context})))
